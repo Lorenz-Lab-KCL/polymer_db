@@ -8,6 +8,6 @@ folder.
 
 2. **orca:** Stores input files with simple examples to perform geometry optimization calculations for 
 
-3. **test:** Contains a set of 20 selected structures which will be used to test the software development required for this project.
+3. **polymers:** Contains a set of 50 selected structures which will be used to test the software development required for this project.
 
 
