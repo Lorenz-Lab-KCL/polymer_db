@@ -8,7 +8,7 @@ to randomly select 50 folders. Once the script is working, we can start to use O
 week). If you have any question, please slack me!
 
 
-
+# Description repository
 
 This repository stores a polymer database with a corresponding analysis of the quantities which have been computed using the *ab-initio* quantum mechanical 
 program ORCA. The workplan and the suggested activities are described in the document **Polymers.pdf**. The next list explains the contents found in every 
