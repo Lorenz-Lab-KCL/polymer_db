@@ -3,4 +3,4 @@
 %pal 
  nprocs #TO_BE_DECLARED_BY_THE_USER
 end
-* xyzfile 0 1 mol.xyz
+* xyzfile 0 1 geo_end.xyz
