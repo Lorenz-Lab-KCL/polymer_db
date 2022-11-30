@@ -1,0 +1,20 @@
+#
+!DLPNO-CCSD(T) def2-tzvpp def2-TZVP/C Grid5 FinalGrid6 VeryTightSCF
+%pal nprocs 40 end
+%maxcore 19000
+%geom Scan
+ D 2 3 11 12 = 0.0, 180.0, 20
+end
+end
+* xyzfile 0 1 mol.xyz
+
+$NEW_JOB
+
+!CCSD(T) def2-tzvpp Grid5 FinalGrid6 VeryTightSCF Nofrozencore
+%pal nprocs 40 end
+%maxcore 19000
+%geom Scan
+ D 5 7 13 8 = 0.0, 180.0, 20
+end
+end
+* xyzfile 0 1 mol.xyz
