@@ -10,23 +10,25 @@ from itertools import chain
 import json
 
 def skiplines(openfile, nlines=0):
-    '''
-    Function to skip nlines + 1 lines in openfile. In other words, 
-    if nlines=0 it will
-    go to the next line.
+    """ Function to skip nlines + 1 lines in openfile. In other words, 
+    if nlines=0 it will go to the next line.
 
     Parameters
     ----------
+    
     openfile: object.
         File object to process.
+        
     nlines: int.
         Number of lines to skip.
 
     Returns
     -------
-    line: string.
+    
+    line: class.string
         Line after skipping nlines + 1 lines.
-    '''
+    
+    """
 
     for i in range(nlines + 1):
         line = next(openfile)
@@ -34,22 +36,25 @@ def skiplines(openfile, nlines=0):
     return line
 
 def orca_reader(infile):
-    """
-    Function to read an ORCA output.
+    """Function to read an ORCA output.
 
     Parameters
     ----------
-    infile: object.
+    
+    infile: cclib.Object.
         Orca file object to process.
 
     Returns
     -------
+    
     data: cclib.Object
         cclib object parsing an Orca Output.
 
     Note:
     -------
+    
     This functions needs thelibrary cclib to work.
+    
     """
     
     obj = ORCA(log)
@@ -58,19 +63,24 @@ def orca_reader(infile):
     return data
 
 def pol_dict_to_matrix(quad):
-    """
-    Function 
+    """ Function to store the polarization strings as a numpy matrix.
 
     Parameters
     ----------
-    infile: object.
-  
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
 
     Returns
     -------
 
+    None:
+      A numpy array with the Polarization Tensor retrieved from Orca.
+
     """
+    
     diag = np.eye(3, k=0)
+    
     mat_1=np.asarray([[0,1,0],[0,0,0],[0,0,0]], dtype='float64')
     mat_2=np.asarray([[0,0,1],[0,0,0],[0,0,0]], dtype='float64')
     mat_3=np.asarray([[0,0,0],[0,0,1],[0,0,0]], dtype='float64')
@@ -90,19 +100,22 @@ def pol_dict_to_matrix(quad):
 
 
 def quad_polarization(infile):
-    '''
-    Function to browse the Quadrupole moment from an Orca output file.
+    """Function to browse the Quadrupole moment from an Orca output file.
 
     Parameters
     ----------
-    infile: object.
-        File object to process.
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
 
     Returns
     -------
-    quad: tuple arrays.
-        This is a tuple with arrays of electronic, nuclear and total polarization tensor.
-    '''
+
+    None:
+       This is a tuple with arrays of electronic, nuclear and total 
+       polarization tensor.
+        
+    """
         
     with open(infile) as f:    
       for line in f:
@@ -123,19 +136,22 @@ def quad_polarization(infile):
       
 
 def dipole_moment(infile):
-    '''
-    Function to search the dipole moment from an Orca output file.
+    '''Function to search the dipole moment from an Orca output file.
 
     Parameters
     ----------
-    infile: object.
-        File object to process.
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
 
+    
     Returns
     -------
-    dip array: tuple.
-        Returns a tuple of arrays containing electronic, nuclear and 
-        total dipole moment values.
+
+    None: 
+      Returns a tuple of arrays containing electronic, nuclear and 
+      total dipole moment values.
+        
     '''
     with open(log) as f:
       for line in f:
@@ -156,22 +172,26 @@ def dipole_moment(infile):
 
 
 def find_string(infile, string):
-    '''
-    Function to search a string in a user provided input file.
+    """Function to search a string in a user provided input file.
 
     Parameters
     ------------
-    infile: object.
-        File object to process. 
 
-    string: str.
+    infile: cclib.Object
+       A cclib object reading the orca output file.
+       
+    string: class.str
         String value to be used in the search.
+    
     
     Returns
     -------
-    dip array: list.
-        Returns a list of indeces where the String has been found. 
-    '''
+    
+    dip array: class.list
+        Returns a list of indexes where the String has been found. 
+
+    """
+    
     result=[]
 
     with open(log) as f:
@@ -182,22 +202,26 @@ def find_string(infile, string):
     return result
 
 def chunk_output(infile):
-    '''
-    Function...
+    """Function to split the ORCA output.
 
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
 
-    string: str.
+    string: class.str
         String value to be used in the search.
+    
     
     Returns
     -------
-    dip array: list.
-        Returns two lists with singlets and triplets energy levels. 
-    '''
+
+    None:
+        Returns two lists with singlets and triplets 
+        energy levels. 
+    
+    """
 
     # Searching via string in the output
     stddft_start=find_string(log,"sTD-DFT procedure...")
@@ -216,9 +240,24 @@ def chunk_output(infile):
     return  stddft_sections[triplet_start[0]], stddft_sections[1]
 
 def split_excitations(infile):
-    '''
-    Function..
-    '''
+    """Function to split the excitation states obtained 
+       from an ORCA calculation.
+
+    Parameters
+    ------------
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
+
+    Returns
+    ---------
+    
+    None:
+       
+       Tuple of list containing the singlets and triplets
+       excitation energies.
+    """
+    
     triplet_idx, singlet_idx=chunk_output(log)
 
     with open(infile) as fp:
@@ -230,9 +269,27 @@ def split_excitations(infile):
     return triplets, singlets
 
 def seek_string(string, array):
+    """Function to search a string whithin an array.
+
+    Parameters
+    ------------
+    
+    string: class.str
+      An user-provided string.
+
+    array: class.list
+      An user-provided list.
+
+
+    Returns
+    ---------
+
+    None:
+
+      List of values
+      
     """
-    Function
-    """
+    
     value_start=[]
     for idx, values in enumerate(array):
        if string in values:
@@ -241,38 +298,42 @@ def seek_string(string, array):
     return value_start[0]
 
 def split_arrays(array) :
-    """
-    Function to split an array and removing blank spaces.
+    """ Function to split an array and removing blank spaces.
 
     Parameters
     ------------
-    array: list.
+    
+    array: class.list
         User provided list. 
     
-    Returns
+    Return
     -------
-    list: list.
+    
+    None:
         Returns a list without blank spaces and split. 
     """
     
     return [re.split("\s+", array[i].strip()) for i in range(len(array))]
 
 def clean_arrays(array, value):
-    """
-    Function
+    """Function to cure user provided arrays.
    
-     Parameters
+    Parameters
     ------------
-    array: list.
+    
+    array: class.list
         User provided list.  
 
-    value: int.
+    value: class.int
         Integer value used for slicing the list.
     
     Returns
     -------
-    list: list.
-        Returns a list with the fetched text between the computed indeces. 
+    
+    None:
+        Returns a list with the fetched text between the computed 
+        indexes. 
+        
     """
     imp_columns=len(array[value])
     valid_columns=len(array)-value
@@ -280,18 +341,22 @@ def clean_arrays(array, value):
     return [array[value+i][0:imp_columns] for i in range(valid_columns-1)]
 
 def singlet_triplet_arrays(infile):
-    """
-    Function to retrieve and organize the ORCA computed excitations from a valid output file. 
+    """ Function to retrieve and organize the ORCA computed excitations 
+        from a valid output file. 
     
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
+    
     Returns
     -------
-    list: tuple.
+    
+    None:
         Returns a tuple of lists for singlets and triplets.  
+    
     """
     triplets, singlets = split_excitations(log)
 
@@ -304,20 +369,22 @@ def singlet_triplet_arrays(infile):
     return clean_arrays(exc_singlets, val_sing), clean_arrays(exc_triplets, val_trip)
 
 def array_to_df(infile):
-    """
-    Function to convert arrays with polarization information into Pandas 
+    """Function to convert arrays with polarization information into Pandas 
     dataframes.
     
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
     Returns
     -------
-    tuple: tuple of Pandas DataFrames
+    
+    tuple: pandas.DataFrames
         Returns a tuple of pandas dataframes holding singlets and triplets 
         results. 
+    
     """
     singlet,triplet=singlet_triplet_arrays(infile)
     
@@ -330,37 +397,43 @@ def array_to_df(infile):
     return df_singlet, df_triplet
 
 def list_mo_energies(infile):
-    """
-    Function to list all occupied energy levels (up to HOMO).
+    """Function to list all occupied energy levels (up to HOMO).
 
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
     Returns
     -------
-    data: list
+    
+    data: class.list
         A list storing the energy levels from a cclib object.
+        
     """
     data=orca_reader(infile)
 
     return data.moenergies[0]
 
 def last_coord(infile):
-    """
-    Function to retrieve the last set of coordinates from an Orca output file.
+    """Function to retrieve the last set of coordinates from an ORCA 
+    output file.
     
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
     Returns
     -------
-    data: list
+    
+    data: class.list
         A list storing the last coordinates from a cclib object.
+    
     """
+    
     data=orca_reader(infile)
     coords=data.metadata['coords']
     natoms=data.natom
@@ -368,21 +441,22 @@ def last_coord(infile):
     return coords[natoms:]
 
 def qm_charges(infile, method="lowdin"):
-    """
-    Function to retreive the lowdin charges from an Orca output file.
+    """Function to retreive the lowdin charges from an ORCA output file.
   
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
-    method: string.
+    method: class.string
         String containing the method. This is lowdin or mulliken.
        
 
     Returns
     -------
-    data: list
+    
+    data: class.list
         A list storing the lowdin charges from a cclib object.
 
     """
@@ -397,19 +471,24 @@ def qm_charges(infile, method="lowdin"):
     return charges_total
 
 def mo_energies(infile):
-    """
-    Function to retrieve the occupied energy levels up to HOMO energy level.
+    """Function to retrieve the occupied energy levels up to 
+    the Highest Occupied Molecular Orbital (HOMO).
     
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
     Returns
     -------
-    mo_energies: list
-        A list with the energy levels for occupied orbitals from a cclib object.
+    
+    mo_energies: class.list
+        A list with the energy levels for occupied orbitals 
+        from a cclib object.
+    
     """
+    
     data=orca_reader(infile)
   
     # Dictionary of mo_energies (WORKING)
@@ -421,18 +500,21 @@ def mo_energies(infile):
     return mo_energies
 
 def atom3D(infile):
-    """
-    Function to retrieve the coordinates and elements from an Orca output file.
+    """Function to retrieve the coordinates and elements from 
+    an ORCA output file.
 
     Parameters
     ------------
-    infile: object.
-        File object to process. 
-   
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file. 
+    
     Returns
     -------
-    atom3D: list
-        A list with the elements and coordinates from a cclib object
+    
+    atom3D: class.list
+        A list with the elements and coordinates 
+        from a cclib object
 
     """
     data=orca_reader(infile)
@@ -444,18 +526,21 @@ def atom3D(infile):
     return atom3D
 
 def symbols(infile):
-    """
-    Function to retrieve the elements from a cclib coordinates object.
-
+    """Function to retrieve the elements from a cclib coordinates 
+    object.
+    
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
     Returns
     -------
+    
     symbols: dict
-        A dictionary containing the elements of a cclib coordnate object.
+        A dictionary containing the elements of a cclib coordinate 
+        object.
     """
     
     data=orca_reader(log)
@@ -466,21 +551,23 @@ def symbols(infile):
 
     return symbols
 
-
-
 def energy_levels(infile):
-    """
-    Function to retreive and report a list of only singlet energy levels.
+    """Function to retreive and report a list of only singlet 
+    energy levels.
 
     Parameters
     ------------
-    infile: object.
-        File object to process. 
+    
+    infile: cclib.Object
+       A cclib object reading the orca output file.
    
+    
     Returns
     -------
-    singlet_energies: list
+    
+    singlet_energies: class.list
         A list with the singlet energy levels from a pandas object.
+    
     """
     # Function to print singlet, triplet arrays
     singlet, triplet = array_to_df(log)
@@ -499,20 +586,22 @@ def energy_levels(infile):
 
 
 def create_json(infile, output_name):
-  """ 
-   Creating dictionaries for coordinates, ground state energies
+  """Creating dictionaries for coordinates, ground state energies
    charges, excited states (singlet and triplets), and electronic 
    properties.
 
-   Parameters
-   ------------
-   infile: object.
-        File object to process. 
+    Parameters
+    ------------
+    
+   infile: cclib.Object
+       A cclib object reading the orca output file.
    
    Returns
-    -------
-    singlet_energies: None
+   -------
+   
+   None:
         A json file based on the created dictionaries. 
+        
   """
 
   sin,trip=energy_levels(log)
@@ -562,13 +651,3 @@ if __name__ == "__main__":
   # Using cclib to obtain some properties
   log="output.log"
   create_json(log,"polymer")
-
-
-
-
-
- 
-
-
-
- 
