@@ -3,7 +3,7 @@
 # Description repository
 
 This repository stores a polymer database with a corresponding analysis of the quantities which have been computed using the *ab-initio* (quantum mechanical)
-program ORCA. The workplan and the suggested activities are described in the document **WP_KURF_2023.pdf** within the **documents** folder. The next list explains 
+program ORCA. The workplan and the suggested activities are described in the document **WP_KURF_2023.pdf** within the **bibliography** folder. The next list explains 
 the contents found in every folder.
 
 1. **bilbiography:** Contains an introductory document explaining the topic of polymers and the roadmap of the project. 
